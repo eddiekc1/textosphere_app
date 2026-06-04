@@ -1,0 +1,43 @@
+{
+  "expo": {
+    "name": "Textosphere",
+    "slug": "textosphere",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./textosphere.png",
+    "scheme": "textosphere",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "icon": "./textosphere.png"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#FFFFFF",
+        "foregroundImage": "./textosphere.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-notifications",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#FFFFFF",
+          "android": {
+            "image": "./textosphere.png",
+            "imageWidth": 96
+          }
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    }
+  }
+}
