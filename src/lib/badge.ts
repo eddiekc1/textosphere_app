@@ -26,7 +26,7 @@ export function parseBadgeCount(rawValue: unknown): number {
     return Number.isFinite(value) ? clampBadgeCount(Math.round(value)) : 0;
   }
 
-  const normalized = String(value).replace(/[０-９]/g, (digit) =>
+  const normalized = String(value).replace(/[\uFF10-\uFF19]/g, (digit) =>
     String.fromCharCode(digit.charCodeAt(0) - 0xfee0)
   );
 
@@ -60,7 +60,7 @@ export const badgeObserverScript = `
   window.__textosphereBadgeObserverInstalled = true;
 
   function normalizeDigits(value) {
-    return String(value || '').replace(/[０-９]/g, function (digit) {
+    return String(value || '').replace(/[\\uFF10-\\uFF19]/g, function (digit) {
       return String.fromCharCode(digit.charCodeAt(0) - 0xfee0);
     });
   }
@@ -105,6 +105,11 @@ export const badgeObserverScript = `
   }
 
   function findUnreadCount() {
+    var notificationCount = readFromElement(document.querySelector('#notificationCount'));
+    if (notificationCount !== null) {
+      return notificationCount;
+    }
+
     if (window.TextosphereNativeBadgeCount !== undefined) {
       var explicitGlobal = parseCount(window.TextosphereNativeBadgeCount);
       if (explicitGlobal !== null) {
@@ -121,11 +126,10 @@ export const badgeObserverScript = `
     }
 
     var selectors = [
+      '#notificationCount',
       '[data-notification-count]',
       '[data-unread-count]',
       '[data-badge-count]',
-      '[aria-label*="通知"]',
-      '[aria-label*="未読"]',
       '[aria-label*="notification" i]',
       '[aria-label*="unread" i]',
       '.notification-badge',
